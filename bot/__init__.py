@@ -413,6 +413,35 @@ try:
 except:
     pass
 try:
+
+    QBIT_CONF = getConfig('QBIT_CONF')
+
+    if len(QBIT_CONF) == 0:
+
+        raise KeyError
+
+    try:
+
+        res = rget(QBIT_CONF)
+
+        if res.status_code == 200:
+
+            with open('qbittorrent.conf', 'wb+') as f:
+
+                f.write(res.content)
+
+        else:
+
+            log_error(f"Failed to download qbittorent.conf, link got HTTP response: {res.status_code}")
+
+    except Exception as e:
+
+        log_error(f"QBIT_CONF: {e}")
+
+except:
+
+    pass
+try:
     ACCOUNTS_ZIP_URL = getConfig('ACCOUNTS_ZIP_URL')
     if len(ACCOUNTS_ZIP_URL) == 0:
         raise KeyError
